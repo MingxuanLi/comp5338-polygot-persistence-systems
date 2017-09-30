@@ -1,0 +1,26 @@
+{
+  "name": "comp5338-polygot-persistence-systems",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "load": "",
+    "query": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MingxuanLi/comp5338-polygot-persistence-systems.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MingxuanLi/comp5338-polygot-persistence-systems/issues"
+  },
+  "homepage": "https://github.com/MingxuanLi/comp5338-polygot-persistence-systems#readme",
+  "dependencies": {
+    "csvtojson": "^1.1.7",
+    "mongoose": "^4.11.13",
+    "yargs": "^9.0.1"
+  }
+}
