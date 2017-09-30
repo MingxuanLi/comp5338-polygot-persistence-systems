@@ -5,7 +5,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const PostsModelSchema = new Schema({
+const VotesModelSchema = new Schema({
     Id: Number,
     PostId: Number,
     VoteTypeId: Number,
@@ -14,6 +14,9 @@ const PostsModelSchema = new Schema({
     BountyAmount: Number
 });
 
-const PostsModel = mongoose.model('Posts', PostsModelSchema);
+const VotesModel = mongoose.model('Votes', VotesModelSchema);
 
-module.exports = PostsModel;
+module.exports = {
+    schema: VotesModelSchema,
+    model: VotesModel
+};

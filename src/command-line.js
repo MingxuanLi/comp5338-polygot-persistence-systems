@@ -2,20 +2,32 @@
  * Created by mingxuanli on 26/9/17.
  */
 
-const csvParser = require('./csv-parser');
+const args = require('yargs');
+const chalk = require('chalk');
+
 const mongo = require('./mongo-helper');
 
-const csvFilePath =  'dataset/Tags.csv';
+const commandLine = async () => {
+    const db = args.argv.db;
+    const action = args.argv.action;
 
-const getCsv = async () => {
-    const value = await csvParser.parseCsvFile(csvFilePath);
-    // console.log(value);
-    mongo.loadData(value);
-};
+    if(db === 'mongo' && action === 'load'){
+        mongo.connect();
+        await mongo.clearCollection();
+        await mongo.loadData();
+        mongo.disconnect();
+    }else if(db === 'mongo' && action === 'query'){
+        mongo.connect();
+        await mongo.clearCollection();
+        await mongo.loadData();
+        mongo.disconnect();
+    }else if(db === 'neo4j' && action === 'load'){
 
+    }else if(db === 'neo4j' && action === 'query'){
 
-const commandLine = () => {
-    getCsv();
+    }else{
+        console.error(chalk.red('Unknown/Invalid DB or Action'));
+    }
 };
 
 commandLine();

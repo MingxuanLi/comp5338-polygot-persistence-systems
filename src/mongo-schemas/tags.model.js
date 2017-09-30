@@ -8,9 +8,14 @@ const Schema = mongoose.Schema;
 const TagsModelSchema = new Schema({
     Id: Number,
     TagName: String,
-    Count: Number
+    Count: Number,
+    // Additional Field
+    QuestionsIds: [Number]
 });
 
 const TagsModel = mongoose.model('Tags', TagsModelSchema);
 
-module.exports = TagsModel;
+module.exports = {
+    schema: TagsModelSchema,
+    model: TagsModel
+};
