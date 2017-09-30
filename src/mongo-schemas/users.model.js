@@ -13,7 +13,9 @@ const UsersModelSchema = new Schema({
     LastAccessDate: Date,
     Views: Number,
     UpVotes: Number,
-    DownVotes: Number
+    DownVotes: Number,
+    // Additional Field
+    PostsIds: [Number]
 });
 
 const UsersModel = mongoose.model('Users', UsersModelSchema);

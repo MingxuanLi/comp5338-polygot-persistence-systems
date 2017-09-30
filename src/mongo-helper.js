@@ -53,6 +53,11 @@ const loadData = async () => {
 
     const saveOps = [];
 
+    tags.forEach((tagData) => {
+        const newTag = new Tags.model(tagData);
+        saveOps.push(newTag.save());
+    });
+
     posts.forEach((postData) => {
         if(!moment(postData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.CreationDate)){
             postData.CreationDate = moment(postData.CreationDate, dateFormat);
@@ -63,13 +68,19 @@ const loadData = async () => {
         if(!moment(postData.LastActivityDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastActivityDate)){
             postData.LastActivityDate = moment(postData.LastActivityDate, dateFormat);
         }
+        const tagNames = postData.Tags.split(',');
+        postData.Tags = [];
+        tagNames.forEach((tagName) => {
+            const tag = tags.find(tag => tag.TagName === tagName);
+            if(tag){
+                postData.Tags.push(tag);
+            }
+        });
+        if(parseInt(postData.PostTypeId) === 1){
+            postData.AnswersIds = posts.filter(post => post.ParentId === postData.Id).map(post => post.Id);
+        }
         const newPost = new Posts.model(postData);
         saveOps.push(newPost.save());
-    });
-
-    tags.forEach((tagData) => {
-        const newTag = new Tags.model(tagData);
-        saveOps.push(newTag.save());
     });
 
     users.forEach((userData) => {
@@ -79,6 +90,7 @@ const loadData = async () => {
         if(!moment(userData.LastAccessDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.LastAccessDate)){
             userData.LastAccessDate = moment(userData.LastAccessDate, dateFormat);
         }
+        userData.PostsIds = posts.filter(post => post.OwnerUserId === userData.Id).map(post => post.Id);
         const newUser = new Users.model(userData);
         saveOps.push(newUser.save());
     });

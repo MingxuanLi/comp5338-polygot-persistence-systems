@@ -8,9 +8,7 @@ const Schema = mongoose.Schema;
 const TagsModelSchema = new Schema({
     Id: Number,
     TagName: String,
-    Count: Number,
-    // Additional Field
-    QuestionsIds: [Number]
+    Count: Number
 });
 
 const TagsModel = mongoose.model('Tags', TagsModelSchema);

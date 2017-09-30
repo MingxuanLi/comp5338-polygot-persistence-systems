@@ -20,7 +20,7 @@ const PostsModelSchema = new Schema({
     LastActivityDate: Date,
     Title: String,
     // Changed Field
-    // Tags: [TagsSchema],
+    Tags: [TagsSchema],
     AnswerCount: Number,
     CommentCount: Number,
     FavoriteCount: Number,
