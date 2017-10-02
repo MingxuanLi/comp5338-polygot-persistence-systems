@@ -6,6 +6,7 @@ const args = require('yargs');
 const chalk = require('chalk');
 
 const mongo = require('./mongo-helper');
+const neo4j = require('./neo4j-helper');
 
 const commandLine = async () => {
     const db = args.argv.db;
@@ -18,13 +19,17 @@ const commandLine = async () => {
         mongo.disconnect();
     }else if(db === 'mongo' && action === 'query'){
         mongo.connect();
-        await mongo.clearCollection();
-        await mongo.loadData();
         mongo.disconnect();
     }else if(db === 'neo4j' && action === 'load'){
-
+        neo4j.setUp();
+        neo4j.connect();
+        await neo4j.clearGraph();
+        await neo4j.loadGraphData();
+        neo4j.disconnect();
+        neo4j.cleanUp();
     }else if(db === 'neo4j' && action === 'query'){
-
+        neo4j.connect();
+        neo4j.disconnect();
     }else{
         console.error(chalk.red('Unknown/Invalid DB or Action'));
     }

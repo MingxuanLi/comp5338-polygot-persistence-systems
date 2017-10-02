@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "load": "node ./src/command-line.js --action=load",
-    "query": "node ./src/command-line.js --action=query"
+    "query": "node ./src/command-line.js --action=query",
+    "generate": "node ./src/generator.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,12 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "csvtojson": "^1.1.7",
+    "fs-extra": "^4.0.2",
+    "json2csv": "^3.11.2",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "mongoose": "^4.11.13",
+    "neo4j-driver": "^1.4.1",
     "yargs": "^9.0.1"
   }
 }

@@ -14,3 +14,5 @@ npm run load -- --db={mongodb|neo4j}
 ```
 npm run query -- --db={mongodb|neo4j}
 ```
+
+//TODO - Indexing for mongodb
