@@ -25,6 +25,8 @@ const commandLine = async () => {
         neo4j.connect();
         await neo4j.clearGraph();
         await neo4j.loadGraphData();
+        await neo4j.setUpNodeLabels();
+        await neo4j.setUpRelationships();
         neo4j.disconnect();
         neo4j.cleanUp();
     }else if(db === 'neo4j' && action === 'query'){

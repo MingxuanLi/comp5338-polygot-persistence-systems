@@ -87,7 +87,8 @@ const loadPostsGraphData = () => {
             post.LastEditorUserId = ToInteger(row.LastEditorUserId),
             post.LastEditDate = ToInteger(row.LastEditDate),
             post.LastActivityDate = ToInteger(row.LastActivityDate),
-            post.AnswerCount = ToInteger(row.AnswerCount)
+            post.AnswerCount = ToInteger(row.AnswerCount),
+            post.Tags = split(row.Tags, ",")
     `;
     return session.run(postsImportQuery);
 };
@@ -108,12 +109,87 @@ const loadUsersGraphData = () => {
     return session.run(usersImportQuery);
 };
 
+const setQuestionLabel = () => {
+    const setQuestionLabelCypherQuery = 'MATCH (post:Post) WHERE post.PostTypeId = 1 SET post:Question';
+    return session.run(setQuestionLabelCypherQuery);
+};
+
+const setAnswerLabel = () => {
+    const setAnswerLabelCypherQuery = 'MATCH (post:Post) WHERE post.PostTypeId = 2 SET post:Answer';
+    return session.run(setAnswerLabelCypherQuery);
+};
+
+const setUserOwnPostRelationship = () => {
+    const setRelationshipCypherQuery = 'MATCH (post:Post), (user:User) WHERE post.OwnerUserId = user.Id CREATE (user)-[own:Owned]->(post)';
+    return session.run(setRelationshipCypherQuery);
+};
+
+const setQuestionAnswerAcceptedRelationship = () => {
+    const setRelationshipCypherQuery = `
+        MATCH (question:Question), (answer:Answer)
+        WHERE question.PostTypeId = 1 AND question.AcceptedAnswerId = answer.Id
+        CREATE (question)-[accepted:Accepted]->(answer)
+    `;
+    return session.run(setRelationshipCypherQuery);
+};
+
+const setQuestionAnswerAnsweredRelationship = () => {
+    const setRelationshipCypherQuery = `
+        MATCH (question:Question), (answer:Answer)
+        WHERE question.Id = answer.ParentId
+        CREATE (question)<-[answered:Answered]-(answer)
+    `;
+    return session.run(setRelationshipCypherQuery);
+};
+
+const setVotePostRelationship = () => {
+    // TODO - Double check
+    const setRelationshipCypherQuery = `
+        MATCH (post:Post), (vote:Vote)
+        WHERE post.Id = vote.PostId
+        CREATE (post)<-[voted:Voted]-(vote)
+    `;
+    return session.run(setRelationshipCypherQuery);
+};
+
+const setPostTagRelationship = () => {
+    // TODO - Double check
+    const setRelationshipCypherQuery = `
+        MATCH (post:Post), (tag:Tag)
+        WHERE tag.TagName IN post.Tags
+        CREATE (post)-[contains:Contains]->(tag);
+    `;
+    return session.run(setRelationshipCypherQuery);
+};
+
+//TODO - Indexing for neo4j
+const createIndex = () => {
+
+};
+
 const loadGraphData = () => {
     return Promise.all([
         loadTagsGraphData(),
         loadVotesGraphData(),
         loadUsersGraphData(),
         loadPostsGraphData()
+    ]);
+};
+
+const setUpNodeLabels = () => {
+    return Promise.all([
+        setQuestionLabel(),
+        setAnswerLabel()
+    ]);
+};
+
+const setUpRelationships = () => {
+    return Promise.all([
+        setUserOwnPostRelationship(),
+        setQuestionAnswerAcceptedRelationship(),
+        setQuestionAnswerAnsweredRelationship(),
+        setVotePostRelationship(),
+        setPostTagRelationship()
     ]);
 };
 
@@ -140,6 +216,8 @@ module.exports = {
     disconnect,
     clearGraph,
     loadGraphData,
+    setUpNodeLabels,
+    setUpRelationships,
     setUp,
     cleanUp
 };

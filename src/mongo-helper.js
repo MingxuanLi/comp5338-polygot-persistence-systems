@@ -112,6 +112,11 @@ const loadData = async () => {
     });
 };
 
+//TODO - Indexing for mongodb
+const createIndex = () => {
+
+};
+
 module.exports = {
     connect,
     disconnect,
