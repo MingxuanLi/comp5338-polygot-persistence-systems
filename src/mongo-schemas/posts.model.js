@@ -7,25 +7,24 @@ const TagsSchema = require('./tags.model').schema;
 const Schema = mongoose.Schema;
 
 const PostsModelSchema = new Schema({
+    // Original Fields
     Id: Number,
     PostTypeId: Number,
     ParentId: Number,
     AcceptedAnswerId: Number,
     CreationDate: Date,
     Score: Number,
-    ViewCount: Number,
     OwnerUserId: Number,
     LastEditorUserId: Number,
     LastEditDate: Date,
     LastActivityDate: Date,
     Title: String,
-    // Changed Field
-    Tags: [TagsSchema],
     AnswerCount: Number,
-    CommentCount: Number,
-    FavoriteCount: Number,
-    // Additional Field
+    // Changed Fields
+    Tags: [TagsSchema],
+    // Additional Fields
     AnswersIds: [Number]
+    // Remove Unused Fields - CommentCount, FavoriteCount, ViewCount, OwnerDisplayName
 });
 
 const PostsModel = mongoose.model('Posts', PostsModelSchema);

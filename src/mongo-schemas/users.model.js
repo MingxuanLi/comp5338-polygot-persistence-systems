@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UsersModelSchema = new Schema({
+    // Original Fields
     Id: Number,
     Reputation: Number,
     CreationDate: Date,
@@ -14,8 +15,9 @@ const UsersModelSchema = new Schema({
     Views: Number,
     UpVotes: Number,
     DownVotes: Number,
-    // Additional Field
+    // Additional Fields
     PostsIds: [Number]
+    // Remove Unused Fields - Location, Age
 });
 
 const UsersModel = mongoose.model('Users', UsersModelSchema);

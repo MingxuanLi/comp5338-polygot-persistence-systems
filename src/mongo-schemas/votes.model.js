@@ -6,12 +6,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const VotesModelSchema = new Schema({
+    // Original Fields
     Id: Number,
     PostId: Number,
     VoteTypeId: Number,
     CreationDate: Date,
-    UserId: Number,
-    BountyAmount: Number
+    UserId: Number
+    // Remove Unused Fields - BountyAmount
 });
 
 const VotesModel = mongoose.model('Votes', VotesModelSchema);

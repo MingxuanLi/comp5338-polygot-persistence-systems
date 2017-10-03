@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TagsModelSchema = new Schema({
+    // Original Fields
     Id: Number,
     TagName: String,
     Count: Number
