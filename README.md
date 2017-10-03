@@ -1,4 +1,4 @@
-# comp5338-polygot-persistence-systems-jerry branch --jerrywang
+# comp5338-polygot-persistence-systems-jerry branch --minguxan li
 ### To install all the required dependencies
 ```
 npm install
