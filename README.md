@@ -1,4 +1,4 @@
-# comp5338-polygot-persistence-systems
+# comp5338-polygot-persistence-systems jerrywang
 
 ### To install all the required dependencies
 ```
