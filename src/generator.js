@@ -15,7 +15,7 @@ const csvFiles = [
     { path: 'dataset/Users.csv', out: 'dataset/Users_neo4j.csv' },
     { path: 'dataset/Votes.csv', out: 'dataset/Votes_neo4j.csv' }
 ];
-const dateFormat = 'DD-MM-YYYY kk:mm';
+const dateFormat = 'DD-MM-YYYY kk:mm:ss A';
 
 const generateNeo4jCsvFiles = async () => {
 
@@ -23,15 +23,15 @@ const generateNeo4jCsvFiles = async () => {
     const postsFields = _.pull(Object.keys(posts[0]), 'CommentCount', 'FavoriteCount', 'ViewCount', 'OwnerDisplayName');
     posts.forEach((postData) => {
         if(!moment(postData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.CreationDate)){
-            postData.CreationDate = moment(postData.CreationDate, dateFormat);
+            postData.CreationDate = moment.utc(postData.CreationDate, dateFormat);
         }
         postData.CreationDate = moment(postData.CreationDate).unix();
         if(!moment(postData.LastEditDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastEditDate)){
-            postData.LastEditDate = moment(postData.LastEditDate, dateFormat);
+            postData.LastEditDate = moment.utc(postData.LastEditDate, dateFormat);
         }
         postData.LastEditDate = moment(postData.LastEditDate).unix();
         if(!moment(postData.LastActivityDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastActivityDate)){
-            postData.LastActivityDate = moment(postData.LastActivityDate, dateFormat);
+            postData.LastActivityDate = moment.utc(postData.LastActivityDate, dateFormat);
         }
         postData.LastActivityDate = moment(postData.LastActivityDate).unix();
         // Remove Unused fields
@@ -44,11 +44,11 @@ const generateNeo4jCsvFiles = async () => {
     const usersFields = _.pull(Object.keys(users[0]), 'Location', 'Age');
     users.forEach((userData) => {
         if(!moment(userData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.CreationDate)){
-            userData.CreationDate = moment(userData.CreationDate, dateFormat);
+            userData.CreationDate = moment.utc(userData.CreationDate, dateFormat);
         }
         userData.CreationDate = moment(userData.CreationDate).unix();
         if(!moment(userData.LastAccessDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.LastAccessDate)){
-            userData.LastAccessDate = moment(userData.LastAccessDate, dateFormat);
+            userData.LastAccessDate = moment.utc(userData.LastAccessDate, dateFormat);
         }
         userData.LastAccessDate = moment(userData.LastAccessDate).unix();
         // Remove Unused fields
@@ -61,7 +61,7 @@ const generateNeo4jCsvFiles = async () => {
     const votesFields = _.pull(Object.keys(votes[0]), 'BountyAmount');
     votes.forEach((voteData) => {
         if(!moment(voteData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(voteData.CreationDate)){
-            voteData.CreationDate = moment(voteData.CreationDate, dateFormat);
+            voteData.CreationDate = moment.utc(voteData.CreationDate, dateFormat);
         }
         voteData.CreationDate = moment(voteData.CreationDate).unix();
         // Remove Unused fields

@@ -11,7 +11,7 @@ const query = `
             $match: {
                 $or: [
                     {"Tags.Id": 4},
-                    {"Tags.TagName": { $eq: 'government'}}
+                    {"Tags.TagName": { $eq: "government"}}
                 ]
             }
         },
@@ -21,7 +21,7 @@ const query = `
         {
             $limit: 1
         }
-    ])
+    ]);
 `;
 
 module.exports = query;

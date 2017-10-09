@@ -4,25 +4,27 @@
 
 const query = `
     db.posts.aggregate([
-        {$match: 
-            {
+        {
+            $match: {
                 $or: [
                     {PostTypeId: 1, Id:1},
                     {PostTypeId: 2, ParentId: 1}
                 ]
             }
         },
-        {$lookup:
-            {
-                from: 'users',
+        {
+            $lookup: {
+                from: "users",
                 localField: "OwnerUserId",
                 foreignField: "Id",
                 as: "User"
             }
         },
-        {$unwind: "$User"},
-        {$project:
-            {
+        {
+            $unwind: "$User"
+        },
+        {
+            $project: {
                 _id: 0,
                 postId: "$Id",
                 userId: "$User.Id",
@@ -32,7 +34,7 @@ const query = `
                 downVotes: "$User.DownVotes"
             }
         }
-    ])
+    ]);
 `;
 
 module.exports = query;

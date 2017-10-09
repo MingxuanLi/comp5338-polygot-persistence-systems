@@ -21,7 +21,7 @@ const csvFiles = [
 ];
 
 const dbUrl = 'mongodb://localhost:27017/polygot-persistence';
-const dateFormat = 'DD-MM-YYYY kk:mm';
+const dateFormat = 'DD-MM-YYYY kk:mm:ss A';
 
 const connect = () => {
     mongoose.connect(dbUrl, {useMongoClient:true});
@@ -60,13 +60,13 @@ const loadData = async () => {
 
     posts.forEach((postData) => {
         if(!moment(postData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.CreationDate)){
-            postData.CreationDate = moment(postData.CreationDate, dateFormat);
+            postData.CreationDate = moment.utc(postData.CreationDate, dateFormat).toISOString();
         }
         if(!moment(postData.LastEditDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastEditDate)){
-            postData.LastEditDate = moment(postData.LastEditDate, dateFormat);
+            postData.LastEditDate = moment.utc(postData.LastEditDate, dateFormat);
         }
         if(!moment(postData.LastActivityDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastActivityDate)){
-            postData.LastActivityDate = moment(postData.LastActivityDate, dateFormat);
+            postData.LastActivityDate = moment.utc(postData.LastActivityDate, dateFormat);
         }
         const tagNames = postData.Tags.split(',');
         postData.Tags = [];
@@ -85,10 +85,10 @@ const loadData = async () => {
 
     users.forEach((userData) => {
         if(!moment(userData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.CreationDate)){
-            userData.CreationDate = moment(userData.CreationDate, dateFormat);
+            userData.CreationDate = moment.utc(userData.CreationDate, dateFormat);
         }
         if(!moment(userData.LastAccessDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.LastAccessDate)){
-            userData.LastAccessDate = moment(userData.LastAccessDate, dateFormat);
+            userData.LastAccessDate = moment.utc(userData.LastAccessDate, dateFormat);
         }
         userData.PostsIds = posts.filter(post => post.OwnerUserId === userData.Id).map(post => post.Id);
         const newUser = new Users.model(userData);
@@ -97,7 +97,7 @@ const loadData = async () => {
 
     votes.forEach((voteData) => {
         if(!moment(voteData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(voteData.CreationDate)){
-            voteData.CreationDate = moment(voteData.CreationDate, dateFormat);
+            voteData.CreationDate = moment.utc(voteData.CreationDate, dateFormat);
         }
         const newVote = new Votes.model(voteData);
         saveOps.push(newVote.save());

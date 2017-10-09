@@ -12,12 +12,12 @@ const commandLine = async () => {
     const db = args.argv.db;
     const action = args.argv.action;
 
-    if(db === 'mongo' && action === 'load'){
+    if(db === 'mongodb' && action === 'load'){
         mongo.connect();
         await mongo.clearCollection();
         await mongo.loadData();
         mongo.disconnect();
-    }else if(db === 'mongo' && action === 'query'){
+    }else if(db === 'mongodb' && action === 'query'){
         mongo.connect();
         mongo.disconnect();
     }else if(db === 'neo4j' && action === 'load'){
