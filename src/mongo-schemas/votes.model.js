@@ -15,6 +15,11 @@ const VotesModelSchema = new Schema({
     // Remove Unused Fields - BountyAmount
 });
 
+VotesModelSchema.index({
+    Id: 1,
+    PostId: 1
+});
+
 const VotesModel = mongoose.model('Votes', VotesModelSchema);
 
 module.exports = {

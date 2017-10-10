@@ -184,9 +184,19 @@ const setPostTagRelationship = () => {
     return session.run(setRelationshipCypherQuery);
 };
 
-//TODO - Indexing for neo4j
 const createIndex = () => {
+    const createIndex = [
+        session.run('CREATE INDEX ON :Tag(Id)'),
+        session.run('CREATE INDEX ON :Vote(Id)'),
+        session.run('CREATE INDEX ON :Vote(PostId)'),
+        session.run('CREATE INDEX ON :Post(Id)'),
+        session.run('CREATE INDEX ON :Post(ParentId)'),
+        session.run('CREATE INDEX ON :Post(OwnerUserId)'),
+        session.run('CREATE INDEX ON :Post(AcceptedAnswerId)'),
+        session.run('CREATE INDEX ON :User(UserId)')
+    ];
 
+    return Promise.all(createIndex);
 };
 
 const loadGraphData = () => {
@@ -201,7 +211,8 @@ const loadGraphData = () => {
 const setUpNodeLabels = () => {
     return Promise.all([
         setQuestionLabel(),
-        setAnswerLabel()
+        setAnswerLabel(),
+        createIndex()
     ]);
 };
 

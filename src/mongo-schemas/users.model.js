@@ -18,6 +18,10 @@ const UsersModelSchema = new Schema({
     // Remove Unused Fields - Location, Age, Reputation, LastAccessDate
 });
 
+UsersModelSchema.index({
+    Id: 1
+});
+
 const UsersModel = mongoose.model('Users', UsersModelSchema);
 
 module.exports = {

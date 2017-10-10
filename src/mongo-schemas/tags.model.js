@@ -12,6 +12,10 @@ const TagsModelSchema = new Schema({
     Count: Number
 });
 
+TagsModelSchema.index({
+    Id: 1
+});
+
 const TagsModel = mongoose.model('Tags', TagsModelSchema);
 
 module.exports = {

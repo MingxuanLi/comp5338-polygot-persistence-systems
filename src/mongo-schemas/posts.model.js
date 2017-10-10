@@ -25,6 +25,13 @@ const PostsModelSchema = new Schema({
     // Remove Unused Fields - CommentCount, FavoriteCount, OwnerDisplayName, Score, LastEditorUserId, LastEditDate, LastActivityDate
 });
 
+PostsModelSchema.index({
+    Id: 1,
+    ParentId: 1,
+    AcceptedAnswerId: 1,
+    OwnerUserId: 1
+});
+
 const PostsModel = mongoose.model('Posts', PostsModelSchema);
 
 module.exports = {
