@@ -8,7 +8,7 @@ const moment = require('moment');
 const UserId = 1;
 
 const query = `
-    
+
 `;
 
 const executeQuery = (session) => {
