@@ -6,8 +6,10 @@ git clone https://github.com/MingxuanLi/comp5338-polygot-persistence-systems.git
 
 ### first you need to install node.js 7.8.x above and npm 5.0 above here
 This project is running on top node.js so this step is mandatory cannot be skipped
+```
 https://nodejs.org/en/download/current/
 https://docs.npmjs.com/getting-started/installing-node
+```
 
 ### To install all the required dependencies
 ```
