@@ -20,6 +20,7 @@ const csvFiles = [
     { model: Votes.model, path: 'dataset/Votes.csv' }
 ];
 
+// Please change the settings if you would like to connect to your local or different environment
 const dbUrl = 'mongodb://localhost:27017/polygot-persistence';
 const dateFormat = 'DD-MM-YYYY kk:mm:ss A';
 

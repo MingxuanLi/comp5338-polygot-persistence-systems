@@ -17,6 +17,7 @@ npm install
 ```
 
 ### To load the data into mongodb or neo4j
+_**We are connnecting to localhost for mongodb and neo4j, there is no user/pass for my local mongodb so you can find the url inside src/mongo-helper.js and I set neo4j/Password123 as the neo4j login, you can find it under src/neo4j-helper.js**_
 ```
 npm run generate
 npm run load -- --db={mongodb|neo4j}

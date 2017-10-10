@@ -7,6 +7,7 @@ const fs = require('fs-extra');
 
 const neo4j = require('neo4j-driver').v1;
 
+// Please change the settings if you would like to connect to your local or different environment
 const assignmentName = 'comp5338-polygot-persistence-systems';
 const assignmentDefaultImportBasePath = process.env.HOME + `/neo4j/db/import/${assignmentName}`;
 const uri = 'bolt://localhost';
