@@ -13,18 +13,16 @@ const PostsModelSchema = new Schema({
     ParentId: Number,
     AcceptedAnswerId: Number,
     CreationDate: Date,
-    Score: Number,
     OwnerUserId: Number,
-    LastEditorUserId: Number,
-    LastEditDate: Date,
-    LastActivityDate: Date,
     Title: String,
     AnswerCount: Number,
+    ViewCount: Number,
     // Changed Fields
     Tags: [TagsSchema],
     // Additional Fields
-    AnswersIds: [Number]
-    // Remove Unused Fields - CommentCount, FavoriteCount, ViewCount, OwnerDisplayName
+    AnswersIds: [Number],
+    VotesIds: [Number]
+    // Remove Unused Fields - CommentCount, FavoriteCount, OwnerDisplayName, Score, LastEditorUserId, LastEditDate, LastActivityDate
 });
 
 const PostsModel = mongoose.model('Posts', PostsModelSchema);

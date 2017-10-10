@@ -58,16 +58,24 @@ const loadData = async () => {
         saveOps.push(newTag.save());
     });
 
+    votes.forEach((voteData) => {
+        if(!moment(voteData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(voteData.CreationDate)){
+            voteData.CreationDate = moment.utc(voteData.CreationDate, dateFormat);
+        }
+        const newVote = new Votes.model(voteData);
+        saveOps.push(newVote.save());
+    });
+
     posts.forEach((postData) => {
         if(!moment(postData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.CreationDate)){
             postData.CreationDate = moment.utc(postData.CreationDate, dateFormat).toISOString();
         }
-        if(!moment(postData.LastEditDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastEditDate)){
-            postData.LastEditDate = moment.utc(postData.LastEditDate, dateFormat);
-        }
-        if(!moment(postData.LastActivityDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastActivityDate)){
-            postData.LastActivityDate = moment.utc(postData.LastActivityDate, dateFormat);
-        }
+        // if(!moment(postData.LastEditDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastEditDate)){
+        //     postData.LastEditDate = moment.utc(postData.LastEditDate, dateFormat);
+        // }
+        // if(!moment(postData.LastActivityDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.LastActivityDate)){
+        //     postData.LastActivityDate = moment.utc(postData.LastActivityDate, dateFormat);
+        // }
         const tagNames = postData.Tags.split(',');
         postData.Tags = [];
         tagNames.forEach((tagName) => {
@@ -79,6 +87,7 @@ const loadData = async () => {
         if(parseInt(postData.PostTypeId) === 1){
             postData.AnswersIds = posts.filter(post => post.ParentId === postData.Id).map(post => post.Id);
         }
+        postData.VotesIds = votes.filter(vote => vote.PostId === postData.Id).map(vote => vote.Id);
         const newPost = new Posts.model(postData);
         saveOps.push(newPost.save());
     });
@@ -87,20 +96,12 @@ const loadData = async () => {
         if(!moment(userData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.CreationDate)){
             userData.CreationDate = moment.utc(userData.CreationDate, dateFormat);
         }
-        if(!moment(userData.LastAccessDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.LastAccessDate)){
-            userData.LastAccessDate = moment.utc(userData.LastAccessDate, dateFormat);
-        }
+        // if(!moment(userData.LastAccessDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.LastAccessDate)){
+        //     userData.LastAccessDate = moment.utc(userData.LastAccessDate, dateFormat);
+        // }
         userData.PostsIds = posts.filter(post => post.OwnerUserId === userData.Id).map(post => post.Id);
         const newUser = new Users.model(userData);
         saveOps.push(newUser.save());
-    });
-
-    votes.forEach((voteData) => {
-        if(!moment(voteData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(voteData.CreationDate)){
-            voteData.CreationDate = moment.utc(voteData.CreationDate, dateFormat);
-        }
-        const newVote = new Votes.model(voteData);
-        saveOps.push(newVote.save());
     });
 
     return new Promise((resolve, reject) => {

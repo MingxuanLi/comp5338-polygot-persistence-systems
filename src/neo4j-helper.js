@@ -41,6 +41,7 @@ const usersCsvFile = {
 const connect = () => {
     driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
     session = driver.session();
+    return session;
 };
 
 const clearGraph = () => {
@@ -88,6 +89,7 @@ const loadPostsGraphData = () => {
             post.LastEditDate = ToInteger(row.LastEditDate),
             post.LastActivityDate = ToInteger(row.LastActivityDate),
             post.AnswerCount = ToInteger(row.AnswerCount),
+            post.ViewCount = ToInteger(row.ViewCount),
             post.Tags = split(row.Tags, ",")
     `;
     return session.run(postsImportQuery);

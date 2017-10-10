@@ -20,7 +20,7 @@ const dateFormat = 'DD-MM-YYYY kk:mm:ss A';
 const generateNeo4jCsvFiles = async () => {
 
     const posts = await csvParser.parseCsvFile(csvFiles[0].path);
-    const postsFields = _.pull(Object.keys(posts[0]), 'CommentCount', 'FavoriteCount', 'ViewCount', 'OwnerDisplayName');
+    const postsFields = _.pull(Object.keys(posts[0]), 'CommentCount', 'FavoriteCount', 'OwnerDisplayName', 'Score', 'LastEditorUserId', 'LastEditDate', 'LastActivityDate');
     posts.forEach((postData) => {
         if(!moment(postData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(postData.CreationDate)){
             postData.CreationDate = moment.utc(postData.CreationDate, dateFormat);
@@ -35,13 +35,13 @@ const generateNeo4jCsvFiles = async () => {
         }
         postData.LastActivityDate = moment(postData.LastActivityDate).unix();
         // Remove Unused fields
-        delete postData.CommentCount, postData.FavoriteCount, postData.ViewCount, postData.OwnerDisplayName;
+        delete postData.CommentCount, postData.FavoriteCount, postData.OwnerDisplayName, postData.Score, postData.LastEditorUserId, postData.LastEditDate, postData.LastActivityDate;
     });
     const newCsvPosts = json2csv({ data: posts, fields: postsFields});
     fs.outputFileSync(csvFiles[0].out, newCsvPosts);
 
     const users = await csvParser.parseCsvFile(csvFiles[2].path);
-    const usersFields = _.pull(Object.keys(users[0]), 'Location', 'Age');
+    const usersFields = _.pull(Object.keys(users[0]), 'Location', 'Reputation', 'Age');
     users.forEach((userData) => {
         if(!moment(userData.CreationDate, moment.ISO_8601).isValid() && !_.isEmpty(userData.CreationDate)){
             userData.CreationDate = moment.utc(userData.CreationDate, dateFormat);
@@ -52,7 +52,7 @@ const generateNeo4jCsvFiles = async () => {
         }
         userData.LastAccessDate = moment(userData.LastAccessDate).unix();
         // Remove Unused fields
-        delete userData.Location, userData.Age;
+        delete userData.Location, userData.Age, userData.Reputation, userData.LastAccessDate;
     });
     const newCsvUsers = json2csv({ data: users, fields: usersFields, quotes: ''});
     fs.outputFileSync(csvFiles[2].out, newCsvUsers);

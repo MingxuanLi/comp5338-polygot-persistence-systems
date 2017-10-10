@@ -8,16 +8,14 @@ const Schema = mongoose.Schema;
 const UsersModelSchema = new Schema({
     // Original Fields
     Id: Number,
-    Reputation: Number,
     CreationDate: Date,
     DisplayName: String,
-    LastAccessDate: Date,
     Views: Number,
     UpVotes: Number,
     DownVotes: Number,
     // Additional Fields
     PostsIds: [Number]
-    // Remove Unused Fields - Location, Age
+    // Remove Unused Fields - Location, Age, Reputation, LastAccessDate
 });
 
 const UsersModel = mongoose.model('Users', UsersModelSchema);
