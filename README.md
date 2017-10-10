@@ -34,3 +34,6 @@ Document is under docs/ directory
 
 ### Dataset
 Dataset is under dataset/ directory
+
+### Report
+The report is under root directory
