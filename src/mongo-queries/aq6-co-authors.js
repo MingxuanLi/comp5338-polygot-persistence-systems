@@ -6,13 +6,13 @@ const _ = require('lodash');
 const Posts = require('../mongo-schemas/posts.model');
 
 // Input Param, Please change it for different queries
-const UserId = 1;
+const UserId = 33;
 
 // Query
 const queryCoAuthorsAnsweringQuestonsForThisUser = [
         {
             $match: {
-                OwnerUserId: 33,
+                OwnerUserId: UserId,
                 PostTypeId: 1
             }
         },
@@ -43,7 +43,7 @@ const queryCoAuthorsAnsweringQuestonsForThisUser = [
         },
         {
             $match: {
-                "CoAuthor.Id": {"$exists": true, "$ne": 33}
+                "CoAuthor.Id": {"$exists": true, "$ne": UserId}
             }
         },
         {

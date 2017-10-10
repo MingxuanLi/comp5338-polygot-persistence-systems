@@ -5,7 +5,7 @@
 const Posts = require('../mongo-schemas/posts.model');
 
 // Input Param, Please change it for different queries
-const tagId = 1;
+const tagId = 4;
 
 // Query
 const query = [
@@ -25,7 +25,7 @@ const query = [
                     input: "$Tags",
                     as: "item",
                     cond: {
-                        "$setIsSubset": [["$$item.Id"], [4]]
+                        "$setIsSubset": [["$$item.Id"], [tagId]]
                     }
                 }
             }

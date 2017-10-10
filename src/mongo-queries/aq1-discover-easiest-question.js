@@ -26,7 +26,7 @@ const query = [
                     input: "$Tags",
                     as: "item",
                     cond: {
-                        "$setIsSubset": [["$$item.Id"], [4, 60]]
+                        "$setIsSubset": [["$$item.Id"], tagIds]
                     }
                 }
             }
